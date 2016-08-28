@@ -2,6 +2,8 @@
   <head>
     <title>Aayush Gupta</title>
     <link rel="stylesheet" type="text/css" href="styles/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="styles/bootstrap-social.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script>
@@ -22,6 +24,81 @@
   </head>
   <body>
     <div id="navigation"></div>
-
+    <div class="container">
+      <div class="row"></div>
+      <div class="row">
+        <div class="col-md-2"></div>
+        <div class = "col-md-8">
+          <ul class="nav nav-pills">
+            <li class="acitve"><a href="#about-me" data-toggle="tab" aria-expanded="false">About Me</a></li>
+            <li class=""><a href="#education" data-toggle="tab" aria-expanded="true">Education</a></li>
+            <li class=""><a href="#career" data-toggle="tab" aria-expanded="false">Career</a></li>
+          </ul>
+          <hr />
+          <div id="myTabContent" class="tab-content">
+            <div class="tab-pane fade active in" id="about-me">
+              <p>
+                Hi, I am Aayush Gupta.<br /><br/> I am a software developer and currently working for <a href="https://www.practo.com/">Practo</a>, a health startup, as a memeber of Consumer Payments Team. <br /><br/>
+                In my free time I am generally interested in reading tech and travel blogs, listening music, participating in hackathon.<br /><br/>
+                Feel free to <a href="mailto:aayushgupta.nitk11@gmail.com">contact</a> me.
+              </p>
+              <div class="row">
+                <div class="col-md-4"></div>
+                <div class="col-md-8">
+                  <ul class="list-inline">
+                    <li>
+                      <a class="btn btn-block btn-social-icon btn-linkedin" href="https://in.linkedin.com/in/aayushgupta0194">
+                        <i class="fa fa-linkedin"></i>
+                      </a>
+                    </li>
+                    <li>
+                      <a class="btn btn-block btn-social-icon btn-github" href="https://github.com/aayush2k11?tab=repositories">
+                        <i class="fa fa-github"></i>
+                      </a>
+                    </li>
+                    <li>
+                      <a class="btn btn-block btn-social-icon btn-facebook" href="https://www.facebook.com/aayushgupta.nitk11">
+                        <i class="fa fa-facebook"></i>
+                      </a>
+                    </li>
+                    <li>
+                      <a class="btn btn-block btn-social-icon btn-twitter" href="https://twitter.com/1994_aag">
+                        <i class="fa fa-twitter"></i>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="education">
+            <h4> Undergaduate in Computer Sciences from <a href="http://nitk.ac.in/">NITK Surathkal</a>, Mangalore.</h4> July 2011 - May 2015
+            <br /><br />
+            <h4> Schooling from <a href="http://davpanipat.in/">D.A.V. Public School</a>, Thermal Colony, Panipat.</h4> April 1997 - March 2011
+            </div>
+            <div class="tab-pane fade" id="career">
+              <div class="row">
+                <h4>Software Engineer at  <a href="https://www.practo.com/">Practo</a></h4> August, 2015 - Present<br/><br/>
+                <div class="row">
+                  <div class="col-md-10">
+                    Member of Consumer Payments Team, a central payments platform for Practo<br/><br/>
+                    Highlights:
+                    <ul>
+                      <li>Seamless integrating of PayU gateway, Paytm Wallet</li>
+                      <li>Integration of ICICI Bank H2H services for setllements and penny testing for sub-merchant on boarding</li>
+                      <li>Building Self-Aggregator model for settling moeny to the authorized sub-merchant</li>
+                      <li>A dashboard for displaying all reports and su-bmerchant on boarding</li>
+                      <li>Integrating Role Based Access Model in dashboard</li>
+                    </ul>
+                  </div>
+                  <div class="col-md-2">
+                    <img src="images/practo_logo.svg"/>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
