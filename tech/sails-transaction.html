@@ -1,0 +1,206 @@
+<html>
+  <head>
+    <title>Aayush Gupta</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../styles/prism.css">
+    <script src="../js/prism.js"></script>
+    <script>
+      $(document).ready(function(){
+        $('#navigation').load('../navbar.html');
+      });
+    </script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-83262631-1', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+    <link rel="stylesheet" type="text/css" href="../styles/bootstrap.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="../styles/style.css">
+    <link rel="stylesheet" type="text/css" href="../styles/bootstrap-social.css">
+  </head>
+
+  <body>
+    <div id="navigation"></div>
+    <div class="container">
+      <div class="row">
+        <h2>Transactions In Sails JS</h2>
+      </div>
+      <div class="row">
+        <h3>What is Sails JS?</h3>
+        <a href="http://sailsjs.org/">Sail JS</a> is a MVC Framework based on <a href="https://expressjs.com/">Express</a>. It uses Waterline ORM and makes it easy to build customise applications on Node JS. While building a simple web application in Sails JS, one needs to take care of two most common factors which are asynchronous behaviour and unavialability of transactions. <br/>
+        Regarding asynchronous behaviour, many solution exisits such as using <a href="https://www.promisejs.org/">Promises</a> or <a href="https://www.npmjs.com/package/async">async</a> npm module. When comes the case of transactions, npm provides <a herf="https://github.com/postmanlabs/sails-mysql-transactions">sails-mysql-transaction</a> module.
+
+        <h3>How To Configure Transactions in Sails?</h3>
+        To configure sails-mysql-transactions one needs to remove sails-mysql package, it might interfare with the functioning of this module. Coming to package.json add the following code:
+        <pre><code>{
+  "scripts": {
+    "preinstall": "npm remove sails-mysql",
+    "postinstall": "npm install sails-mysql-transactions"
+  }
+}
+        </code></pre>
+        The above script makes sure, whenever you do npm install, sails-mysql is removed pre-installation and sails-mysql-transactions is installed. <br/>
+        Next, we have to do is configure database connection. We basically need to specify separate connections, one for running migrations which will be using <code>sails-mysql</code> adapter and other connection is for models which will be using <code>sail-mysql-transactions</code> adapter. <code>sails-mysql-transactions</code> provide the functionality of <code>sail-mysql</code>, hence we need not install it separately.<br/>
+        Add following connection configurations in <code>config/connections.js</code>
+        <pre><code>
+  module.exports.connections = {
+    dataConnection: {
+      adapter : 'sails-mysql-transactions',
+      host    : 'localhost',
+      port    : 3306,
+      user    : 'root',
+      password: '',
+      database: 'sample_database',
+      rollbackTransactionOnError: true,
+    },
+    migrationConnection: {
+      adapter : 'sails-mysql',
+      host    : 'localhost',
+      port    : 3306,
+      user    : 'root',
+      password: '',
+      database: 'sample_database'
+    }
+  }
+        </code></pre>
+        Add following snippet in <code>config/models.js</code> to let models know which database they are connected to:
+        <pre><code>
+  module.exports.models = {
+    connection: 'dataConnection',
+    migrate: 'safe',
+    schema : true
+  };
+        </code></pre>
+        And for migrations we configure <code>config/migrations.js</code> as follows:
+        <pre><code>
+  module.exports.migrations = {
+    connection: 'migrationConnection'
+  };
+          </code></pre>
+        One important thing I need to mention is, <code>sails-mysql-transactions</code> needs transactionId available in each table, so if you are using migrations for the database, do add transactionId attribute of datatype string. You need not add this attribute to your models.
+
+        <h3>Using Transactions in Controllers</h3>
+        By now, we have configured <code>sails-mysql-transactions</code> in our application, we have specified different connections for migrations and models as well, so lets proceed with using the module. <br/>
+        Module is generally used in the situation where we are creating objects for models which belongs to another model, and if any operation fails, we make sure rollback happens for both the models. Taking a very common examples on online shopping, consider the following <b>problem statment:</b> <br/>
+        We have three models, orders, lineItems and payment. An order can have many lineItems and one payment. Here is the sample schema of the models:<br/>
+        <code>Order.js</code>:
+        <pre><code>
+  module.exports = {
+    userName: {
+      type: string
+    },
+    lineItems:{
+      collection: 'lineItem',
+      via       : 'order'
+    },
+    payment:{
+      columnName: 'paymentId',
+      model     : 'payment'
+    }
+  }
+        </code></pre>
+        <code>LineItem.js</code><br/>
+        <pre><code>
+  module.exports = {
+    amount: {
+      type: decimal
+    },
+    productCode: {
+      type: string
+    },
+    order:{
+      columnName: 'orderId',
+      model     : 'order'
+    }
+  }
+        </code></pre>
+        <code>Payment.js</code><br/>
+        <pre><code>
+  module.exports = {
+    totalAmount: {
+      type: decimal
+    },
+    order:{
+      columnName: 'orderId',
+      model     : 'order'
+    }
+  }
+        </code></pre>
+        For making a payment for an order placed by a user, we have to make an order object, store lineItems associated with the order, evaluate the total amount of the lineItems and we are storing it in payments. If we get any error in creating any of the objects, we have to make sure that all three objects rollback as they are associated to each other, hence we need to use transactions here. Let's consider the entire process to performed at OrderController, makePayment action.
+        <pre><code class="javascript">
+  // OrderController.js
+  // inculding sails-mysql-transactions
+  var Transaction = require(sails-mysql-transactions)
+  module.exports = {
+    makePayment: function (req, res){
+      // Starting the transaction
+      Transaction.start(function (error, transaction){
+        if (error){
+          return res.json(500, {message: 'Failed to start the transaction'})
+        } else {
+          // creating order using transaction
+          Order.transact(transaction).create({
+            userName: "John"
+          }, function (error, order){
+            if (error){
+              // checking if transaction exists and calling rollback if an error occurs
+              transaction && transaction.rollback()
+              return res.json(500, {message: error.message})
+            } else {
+              LineItem.transact(transaction).create({
+                amount: 200,
+                productCode: "ABC",
+                order: order.id
+              },function (error, lineItem){
+                if (error){
+                  transaction && transaction.rollback()
+                  return res.json(500, {message: error.message})
+                } else {
+                  Payment.transact(transaction).create({
+                    totalAmount: 200,
+                    order: order.id
+                  }, function (error, payment){
+                    if (error){
+                      transaction && transaction.rollback()
+                      return res.json(500, {message: error.message})
+                    } else {
+                      // Updating order with paymentId
+                      order.pyamentId = payment.id
+                      // making sure updating order belonging to current transaction
+                      order.transactionId = transaction.connection().transactionId
+                      order.save(function (error){
+                        if (error){
+                          return res.json(500, {message: error.message})
+                        } else {
+                          // commiting the transaction, transaction.commit() is aysnc function
+                          transaction && transaction.commit(function (error){
+                            if (error){
+                              return res.json(500, {message: error.message})
+                            } else {
+                              return res.json(200, {message: "order placed successfully"})
+                            }
+                          })
+                        }
+                      })
+                    }
+                  })
+                }
+              })
+            }
+          })
+        }
+      })
+    }
+  }
+        </code></pre>
+      </div>
+    </div>
+  </body>
+</html>
