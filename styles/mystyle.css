@@ -1,0 +1,11 @@
+#details {
+  text-align: 'justify';
+}
+.sails-transaction {
+  background-image: url("http://sailsjs.org/images/logos/sails-logo_dkBg_ltBlue.png");
+  background-repeat: no-repeat;
+  background-position: right bottom;
+  background-color: #003333;
+  color: #ffffff;
+}
+
