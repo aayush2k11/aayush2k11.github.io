@@ -9,28 +9,23 @@
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="../styles/prism.css">
     <script src="../js/prism.js"></script>
+    <script src="../js/widget.js"></script>
+    <script src="../js/facebook-widget.js"></script>
+    <script src="../js/analytics.js"></script>
     <script>
       $(document).ready(function(){
         $('#navigation').load('../navbar.html');
       });
     </script>
-    <script>
-      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-      ga('create', 'UA-83262631-1', 'auto');
-      ga('send', 'pageview');
-
-    </script>
   </head>
 
   <body>
+    <div id="fb-root"></div>
+
     <div id="navigation"></div>
     <div class="container">
       <div class="row">
-        <h2>Transactions In Sails JS</h2>
+        <a name="top"><h2>Transactions In Sails JS</h2></a>
       </div>
       <div class="row">
         <h3>What is Sails JS?</h3>
@@ -214,6 +209,27 @@
     });
   };
         </code></pre>
+
+        <h3>Conclusion</h3>
+        Hoping, you would have got basic idea of using transactions in Sails JS. I would like to conclude following points:
+        <ul>
+          <li>You need to remove <code>sails-mysql</code> module and configure the database connections for migration and data access with the correspending adapters.</li>
+          <li><code>transaction.commit()</code> is an asyncronous operation, if you are running transaction in a loop always perform the <code>.commit()</code> operation in the manner displayed above.</li>
+          <li>While using <code>.save()</code> operation, do assign the transactionId to the object on which operation is being performed.</li>
+        </ul>
+      </div><br/><br/>
+      <div class="row">
+        <ul class="list-inline">
+          <li><div class="fb-share-button" data-href="http://aayushgupta.me/" data-layout="button_count" data-size="large" data-mobile-iframe="true">
+            <a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Faayushgupta.me%2F&amp;src=sdkpreparse">Share</a>
+          </div></li>
+          <li>
+          <a class="twitter-share-button" href="https://twitter.com/intent/tweet?text=Learn%20integrating%20transactions%20in%20Sails%20JS" data-size="large"> Tweet</a>
+          </li>
+        </ul>
+      </div>
+      <div class="row">
+        <div class="fb-comments" data-href="http://aayushgupta.me/" data-numposts="5"></div>
       </div>
     </div>
   </body>
