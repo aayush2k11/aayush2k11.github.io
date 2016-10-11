@@ -1,0 +1,87 @@
+<html>
+  <head>
+    <meta name="keywords" content="technology blogs">
+    <meta name="description" content="index page for technology blogs">
+    <meta name="robots" content="index,follow">
+    <title>Aayush Gupta</title>
+    <link rel="stylesheet" type="text/css" href="styles/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="styles/bootstrap-social.css">
+    <link rel="stylesheet" type="text/css" href="styles/mystyle.css">
+    <link rel="stylesheet" type="text/css" href="styles/side-bar.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script>
+      $(document).ready(function(){
+        $('#navigation').load('navbar.html');
+      });
+    </script>
+    <!-- <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-83262631-1', 'auto');
+      ga('send', 'pageview');
+
+    </script> -->
+  </head>
+  <body>
+    <div id="navigation"></div>
+    <!-- <nav class="navbar navbar-default sidebar" role="navigation">
+      <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-sidebar-navbar-collapse-1">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+      <div class="collapse navbar-collapse" id="bs-sidebar-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="#">Home<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-home"></span></a></li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Usuarios <span class="caret"></span><span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-user"></span></a>
+            <ul class="dropdown-menu forAnimate" role="menu">
+              <li><a href="{{URL::to('createusuario')}}">Crear</a></li>
+              <li><a href="#">Modificar</a></li>
+              <li><a href="#">Reportar</a></li>
+              <li class="divider"></li>
+              <li><a href="#">Separated link</a></li>
+              <li class="divider"></li>
+              <li><a href="#">Informes</a></li>
+            </ul>
+          </li>
+          <li ><a href="#">Libros<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-th-list"></span></a></li>
+          <li ><a href="#">Tags<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-tags"></span></a></li>
+        </ul>
+      </div>
+    </div>
+    </nav> -->
+    <div class="row">
+      <div class="col-sm-3 col-md-2 sidebar">
+        <ul class="nav nav-sidebar">
+          <li><a href="#hackerrank">Hackerrank</a></li>
+          <li><a href="#">Leet Code</a></li>
+          <li><a href="#">Coding Tests</a></li>
+        </ul>
+      </div>
+      <div class="col-sm-9 col-md-10">
+        <div id="hackerrank">
+          <h3>Hacker Rank</h3>
+          <ul class="inline">
+            <li>2D Array</li>
+            <li>2D Array</li>
+            <li>2D Array</li>
+            <li>2D Array</li>
+            <li>2D Array</li>
+            <li>2D Array</li>
+            <li>2D Array</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
